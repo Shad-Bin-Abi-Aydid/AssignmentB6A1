@@ -15,46 +15,34 @@ const formatValue = <T extends ReturnValue>(value: T): ReturnValue => {
 // const result = formatValue(false);
 // console.log(result);
 
-
-
-
-
-
 // Problem 2
 type DataType = string | any[];
-const getLength = (value: DataType) : number =>{
+const getLength = (value: DataType): number => {
+  if (typeof value === "string") {
+    return value.length;
+  }
+  if (Array.isArray(value)) {
+    return value.length;
+  }
 
-    if(typeof value === 'string'){
-        return value.length;
-    }
-    if(Array.isArray(value)){
-        return value.length
-    }
-
-    throw new Error("Unsupported type");
-    
-}
+  throw new Error("Unsupported type");
+};
 
 // console.log(getLength([2,3,4,'dj']));
 
-
-
-
-
-
 // Problem 3
-class Person{
-    name: string;
-    age: number;
+class Person {
+  name: string;
+  age: number;
 
-    constructor(name: string, age:number){
-        this.name = name;
-        this.age = age;
-    }
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
 
-    getDetails (){
-        return `Name: ${this.name}, Age: ${this.age}`;
-    }
+  getDetails() {
+    return `Name: ${this.name}, Age: ${this.age}`;
+  }
 }
 
 // const person1 = new Person('John Doe', 30);
@@ -63,19 +51,114 @@ class Person{
 // const person2 = new Person('Alice', 25);
 // console.log(person2.getDetails());
 
-
-
-
-
-
 //Problem 4
 type Item = {
-  title:string;
-  rating:number;
+  title: string;
+  rating: number;
+};
+
+const filterByRating = (arrayOfItems: Item[]): Item[] => {
+  return arrayOfItems.filter((item) => item.rating >= 4);
+};
+
+//  const books = [
+//   { title: 'Book A', rating: 4.5 },
+//   { title: 'Book B', rating: 3.2 },
+//   { title: 'Book C', rating: 5.0 },
+// ];
+
+// console.log(filterByRating(books));
+
+// Problem 5
+
+type Users = {
+  id: number | string;
+  name: string;
+  email: string;
+  isActive: boolean;
+};
+
+const filterActiveUsers = (arrayOfUsers: Users[]): Users[] => {
+  return arrayOfUsers.filter((user) => user.isActive === true);
+};
+
+// const users = [
+//   { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
+//   { id: 2, name: 'Asha', email: 'asha@example.com', isActive: false },
+//   { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
+// ];
+
+// console.log(filterActiveUsers(users));
+
+// Problem 6
+interface Book {
+  title: string;
+  author: string;
+  publishedYear: number;
+  isAvailable: boolean;
 }
 
- const filterByRating = (arrayOfItems : Item[]): Item[] =>{
-  return arrayOfItems.filter(item =>item.rating >= 4);
+const printBookDetails = (bookDetails: Book) => {
+  console.log(
+    `Title: ${bookDetails.title}, Author: ${bookDetails.author}, Published: ${bookDetails.publishedYear}, Available: ${bookDetails.isAvailable === true ? 'Yes' : 'No'}`);
 
- }
 
+};
+
+// const myBook: Book = {
+//   title: 'The Great Gatsby',
+//   author: 'F. Scott Fitzgerald',
+//   publishedYear: 1925,
+//   isAvailable: false,
+// };
+
+// printBookDetails(myBook);
+
+
+
+
+
+// Problem 7
+
+type Values = number | string;
+const getUniqueValues = (array1 : Values[], array2: Values[]) : Values[] =>{
+
+  const resultArray : Values[] = [];
+
+  const pushUniqueValueInArray = (value:Values) =>{
+    let isSame = false;
+
+    for(let item of resultArray){
+      if(item === value){
+        isSame = true;
+        break;
+      }
+    }
+
+    if(!isSame){
+      resultArray.push(value);
+    }
+
+  }
+
+  for(const value of array1){
+    pushUniqueValueInArray(value);
+  }
+
+  for(const value of array2){
+    pushUniqueValueInArray(value);
+  }
+
+  return resultArray;
+
+}
+
+// const array1 = [1, 2, 3, 4, 5,7,8,9,'shad'];
+// const array2 = [3, 4, 5, 6, 7,'shad','hi'];
+// console.log(getUniqueValues(array1, array2));
+
+
+
+
+
+// Problem 8
