@@ -100,9 +100,10 @@ interface Book {
 
 const printBookDetails = (bookDetails: Book) => {
   console.log(
-    `Title: ${bookDetails.title}, Author: ${bookDetails.author}, Published: ${bookDetails.publishedYear}, Available: ${bookDetails.isAvailable === true ? 'Yes' : 'No'}`);
-
-
+    `Title: ${bookDetails.title}, Author: ${bookDetails.author}, Published: ${
+      bookDetails.publishedYear
+    }, Available: ${bookDetails.isAvailable === true ? "Yes" : "No"}`
+  );
 };
 
 // const myBook: Book = {
@@ -114,51 +115,79 @@ const printBookDetails = (bookDetails: Book) => {
 
 // printBookDetails(myBook);
 
-
-
-
-
 // Problem 7
 
 type Values = number | string;
-const getUniqueValues = (array1 : Values[], array2: Values[]) : Values[] =>{
+const getUniqueValues = (array1: Values[], array2: Values[]): Values[] => {
+  const resultArray: Values[] = [];
 
-  const resultArray : Values[] = [];
-
-  const pushUniqueValueInArray = (value:Values) =>{
+  const pushUniqueValueInArray = (value: Values) => {
     let isSame = false;
 
-    for(let item of resultArray){
-      if(item === value){
+    for (let item of resultArray) {
+      if (item === value) {
         isSame = true;
         break;
       }
     }
 
-    if(!isSame){
+    if (!isSame) {
       resultArray.push(value);
     }
+  };
 
-  }
-
-  for(const value of array1){
+  for (const value of array1) {
     pushUniqueValueInArray(value);
   }
 
-  for(const value of array2){
+  for (const value of array2) {
     pushUniqueValueInArray(value);
   }
 
   return resultArray;
-
-}
+};
 
 // const array1 = [1, 2, 3, 4, 5,7,8,9,'shad'];
 // const array2 = [3, 4, 5, 6, 7,'shad','hi'];
 // console.log(getUniqueValues(array1, array2));
 
-
-
-
-
 // Problem 8
+
+// type Discount = number & { _brand: "Discount_0_100" };
+type Product = {
+  name: string;
+  price: number;
+  quantity: number;
+  discount?: number;
+};
+
+const calculateTotalPrice = (value: Product[]): number => {
+  if (value.length > 0) {
+    const totalPrice = value.map((item) => {
+      let discount = 0;
+      const totalPriceThroughQuantity = item.price * item.quantity;
+      if (
+        item.discount !== undefined &&
+        item.discount >= 0 &&
+        item.discount <= 100
+      ) {
+        discount = (item.discount / 100) * totalPriceThroughQuantity;
+      }
+      const totalPriceWithDiscount = totalPriceThroughQuantity - discount;
+
+      return totalPriceWithDiscount;
+    });
+
+    return totalPrice.reduce((sum, price) => sum + price, 0);
+  } else {
+    return 0;
+  }
+};
+
+const products = [
+  { name: "Pen", price: 10, quantity: 2 },
+  { name: "Notebook", price: 25, quantity: 3, discount: 10 },
+  { name: "Bag", price: 50, quantity: 1, discount: 20 },
+];
+
+console.log(calculateTotalPrice(products));
