@@ -1,4 +1,3 @@
-// Problem-1
 type ReturnValue = string | number | boolean;
 
 const formatValue = <T extends ReturnValue>(value: T): ReturnValue => {
@@ -9,13 +8,12 @@ const formatValue = <T extends ReturnValue>(value: T): ReturnValue => {
     return value * 10;
   }
 
-  return !value;
+  if (typeof value === "boolean") {
+    return !value;
+  }
+  return value;
 };
 
-// const result = formatValue(false);
-// console.log(result);
-
-// Problem 2
 type DataType = string | any[];
 const getLength = (value: DataType): number => {
   if (typeof value === "string") {
@@ -25,12 +23,9 @@ const getLength = (value: DataType): number => {
     return value.length;
   }
 
-  throw new Error("Unsupported type");
+  return 0;
 };
 
-// console.log(getLength([2,3,4,'dj']));
-
-// Problem 3
 class Person {
   name: string;
   age: number;
@@ -45,13 +40,6 @@ class Person {
   }
 }
 
-// const person1 = new Person('John Doe', 30);
-// console.log(person1.getDetails());
-
-// const person2 = new Person('Alice', 25);
-// console.log(person2.getDetails());
-
-//Problem 4
 type Item = {
   title: string;
   rating: number;
@@ -60,16 +48,6 @@ type Item = {
 const filterByRating = (arrayOfItems: Item[]): Item[] => {
   return arrayOfItems.filter((item) => item.rating >= 4);
 };
-
-//  const books = [
-//   { title: 'Book A', rating: 4.5 },
-//   { title: 'Book B', rating: 3.2 },
-//   { title: 'Book C', rating: 5.0 },
-// ];
-
-// console.log(filterByRating(books));
-
-// Problem 5
 
 type Users = {
   id: number | string;
@@ -82,15 +60,6 @@ const filterActiveUsers = (arrayOfUsers: Users[]): Users[] => {
   return arrayOfUsers.filter((user) => user.isActive === true);
 };
 
-// const users = [
-//   { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
-//   { id: 2, name: 'Asha', email: 'asha@example.com', isActive: false },
-//   { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
-// ];
-
-// console.log(filterActiveUsers(users));
-
-// Problem 6
 interface Book {
   title: string;
   author: string;
@@ -105,17 +74,6 @@ const printBookDetails = (bookDetails: Book) => {
     }, Available: ${bookDetails.isAvailable === true ? "Yes" : "No"}`
   );
 };
-
-// const myBook: Book = {
-//   title: 'The Great Gatsby',
-//   author: 'F. Scott Fitzgerald',
-//   publishedYear: 1925,
-//   isAvailable: false,
-// };
-
-// printBookDetails(myBook);
-
-// Problem 7
 
 type Values = number | string;
 const getUniqueValues = (array1: Values[], array2: Values[]): Values[] => {
@@ -147,13 +105,6 @@ const getUniqueValues = (array1: Values[], array2: Values[]): Values[] => {
   return resultArray;
 };
 
-// const array1 = [1, 2, 3, 4, 5,7,8,9,'shad'];
-// const array2 = [3, 4, 5, 6, 7,'shad','hi'];
-// console.log(getUniqueValues(array1, array2));
-
-// Problem 8
-
-// type Discount = number & { _brand: "Discount_0_100" };
 type Product = {
   name: string;
   price: number;
@@ -183,11 +134,3 @@ const calculateTotalPrice = (value: Product[]): number => {
     return 0;
   }
 };
-
-const products = [
-  { name: "Pen", price: 10, quantity: 2 },
-  { name: "Notebook", price: 25, quantity: 3, discount: 10 },
-  { name: "Bag", price: 50, quantity: 1, discount: 20 },
-];
-
-console.log(calculateTotalPrice(products));
